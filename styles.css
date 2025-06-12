@@ -1,0 +1,128 @@
+/* General body styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Form section styling */
+.form-section {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  background-color: #fafafa;
+}
+
+/* Headings inside sections */
+.form-section h2,
+.form-section h3 {
+  margin-top: 0;
+}
+
+/* Fine print */
+.fine-print {
+  font-size: 0.6em;  /* ~10px, readable on most screens */
+  color: #555;
+  line-height: 1.4;
+}
+
+/* Input styling */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+input[type="date"],
+select {
+  padding: 5px;
+  font-size: 1em;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* Signature fields */
+.signature-field {
+  width: 200px;
+  border-bottom: 1px solid #333;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background: none;
+  font-size: 1em;
+}
+
+/* Card logos (if used) */
+/* .card-logo {
+  display: inline-block !important;
+  height: 25px;
+  vertical-align: middle;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+*/
+
+#card-logo {
+  display: inline-block;
+  height: 25px;
+  vertical-align: middle;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+
+/* Additional layout */
+.form-row {
+  margin-bottom: 10px;
+}
+
+.form-row-inline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.form-row-inline label {
+  margin-right: 5px;
+  white-space: nowrap;
+}
+
+/* Notes and disclaimers */
+.note {
+  font-size: 0.8em;
+  color: #666;
+}
+/* Print-specific styling */
+@media print {
+  body.printable {
+    font-family: Arial, sans-serif;
+    background: white;
+    color: black;
+    font-size: 11pt;
+    margin: 20px;
+  }
+
+  #form-buttons {
+    display: none;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  select {
+    border: none;
+    background: transparent;
+    font-weight: normal;
+    font-size: 11pt;
+  }
+
+  .signature-field {
+    border-bottom: 1px solid black;
+    width: 200px;
+    display: inline-block;
+  }
+}
