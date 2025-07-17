@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Payment Plan Form</title>
   <link rel="stylesheet" href="styles.css" />
+
+  <script type="module" src="https://unpkg.com/@googlemaps/extended-component-library@latest"></script>
+  <gmpx-api-loader key="AIzaSyCLZkQTcTBfWotctknU_uDmERWHgH5K1uc"></gmpx-api-loader>
 </head>
 <body>
   <div id="logo-container" style="text-align: center; margin-bottom: 20px;">
@@ -19,5 +22,9 @@
   <script src="./scripts/installmentplan.js"></script>
   <script src="./scripts/patientinfo.js"></script>
   <script src="./scripts/signatureblock.js"></script>
+  <script src="./scripts/jspdf.umd.min.js"></script>
+  <script src="./scripts/html2canvas.min.js"></script>
+  <script src="./scripts/addressValidation.js"></script>
+
 </body>
 </html>
