@@ -530,6 +530,6 @@ patientPicker.addEventListener("gmpx-placechange", (event) => {
   // e.g., document.getElementById("someHiddenField").value = place.formattedAddress;
 });
 
-    console.log('autocomplete element upgrade check:', customElements.get('gmpx-place-autocomplete'));
+  //  console.log('autocomplete element upgrade check:', customElements.get('gmpx-place-autocomplete'));
   }
 });
