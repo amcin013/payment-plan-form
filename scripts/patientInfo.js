@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
 
   formWrapper.appendChild(patientInfoSection);
-  // Inject patient address using createElement to support Google PlaceAutocompleteElement
+  /* Inject patient address using createElement to support Google PlaceAutocompleteElement
 const patientAddressRow = document.createElement("div");
 patientAddressRow.className = "form-row-inline";
 
@@ -67,7 +67,7 @@ patientAuto.appendChild(patientInput);
 patientAddressRow.appendChild(patientLabel);
 patientAddressRow.appendChild(patientAuto);
 patientInfoSection.appendChild(patientAddressRow);
-
+*/
   // Attach credit card formatting listener after element is injected
 const ccNumberInput = document.getElementById("ccNumber");
 
