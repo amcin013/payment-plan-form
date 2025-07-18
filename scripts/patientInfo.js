@@ -26,13 +26,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  patientEmail?.addEventListener("blur", () => {
-    validateEmailField(patientEmail, patientEmailError);
-  });
+//  patientEmail?.addEventListener("blur", () => {
+//    validateEmailField(patientEmail, patientEmailError);
+//  });
 
-  billingEmail?.addEventListener("blur", () => {
-    validateEmailField(billingEmail, billingEmailError);
-  });
+//  billingEmail?.addEventListener("blur", () => {
+//    validateEmailField(billingEmail, billingEmailError);
+//  });
   
   // Create Patient and Payment Information section
   const patientInfoSection = document.createElement("section");
@@ -77,6 +77,16 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
 
   formWrapper.appendChild(patientInfoSection);
+  // Bind validation after the DOM elements are injected
+const patientEmail = document.getElementById("patientEmail");
+const patientEmailError = document.getElementById("patientEmailError");
+
+if (patientEmail && patientEmailError) {
+  patientEmail.addEventListener("blur", () => {
+    validateEmailField(patientEmail, patientEmailError);
+  });
+}
+
 const ccNumberInput = document.getElementById("ccNumber");
 
 if (ccNumberInput) {
