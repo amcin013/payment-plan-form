@@ -32,17 +32,16 @@ document.addEventListener("DOMContentLoaded", function () {
   // Remove all non-digit characters
   const digits = input.value.replace(/\D/g, '');
 
-  if (digits.length === 11 && digits.startsWith("1")) {
-    // Format as (XXX) XXX-XXXX
-    const area = digits.slice(1, 4);
-    const central = digits.slice(4, 7);
-    const line = digits.slice(7);
-    input.value = `(${area}) ${central}-${line}`;
+   if (digits.length === 10) {
+    const area = digits.slice(0, 3);
+    const central = digits.slice(3, 6);
+    const line = digits.slice(6);
+    input.value = `(${area})${central}-${line}`;
     input.classList.remove("input-error");
     errorSpan.textContent = "";
     return true;
   } else {
-    errorSpan.textContent = "Please enter a valid 11-digit US phone number starting with 1.";
+    errorSpan.textContent = "Please enter a valid 10-digit US phone number.";
     input.classList.add("input-error");
     return false;
   }
