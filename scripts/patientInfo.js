@@ -427,6 +427,12 @@ function updatePatientSection() {
     </div>
   </div>
 `;
+  const authNameInput = document.getElementById("authName");
+const nameOnCardValue = document.getElementById("nameOnCard")?.value?.trim();
+
+if (authNameInput && nameOnCardValue) {
+  authNameInput.value = nameOnCardValue;
+}
 
   const billingPhone = document.getElementById("billingPhone");
 const billingPhoneError = document.createElement("span");
