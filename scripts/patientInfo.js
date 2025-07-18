@@ -26,13 +26,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-//  patientEmail?.addEventListener("blur", () => {
-//    validateEmailField(patientEmail, patientEmailError);
-//  });
+  function formatAndValidatePhone(input, errorSpan) {
+  if (!input) return;
 
-//  billingEmail?.addEventListener("blur", () => {
-//    validateEmailField(billingEmail, billingEmailError);
-//  });
+  // Remove all non-digit characters
+  const digits = input.value.replace(/\D/g, '');
+
+  if (digits.length === 11 && digits.startsWith("1")) {
+    // Format as (XXX) XXX-XXXX
+    const area = digits.slice(1, 4);
+    const central = digits.slice(4, 7);
+    const line = digits.slice(7);
+    input.value = `(${area}) ${central}-${line}`;
+    input.classList.remove("input-error");
+    errorSpan.textContent = "";
+    return true;
+  } else {
+    errorSpan.textContent = "Please enter a valid 11-digit US phone number starting with 1.";
+    input.classList.add("input-error");
+    return false;
+  }
+}
   
   // Create Patient and Payment Information section
   const patientInfoSection = document.createElement("section");
@@ -414,6 +428,19 @@ function updatePatientSection() {
     </div>
   </div>
 `;
+
+  const billingPhone = document.getElementById("billingPhone");
+const billingPhoneError = document.createElement("span");
+billingPhoneError.id = "billingPhoneError";
+billingPhoneError.className = "error-message";
+billingPhone?.parentNode.appendChild(billingPhoneError);
+
+if (billingPhone && !billingPhone.hasAttribute("data-bound")) {
+  billingPhone.addEventListener("blur", () => {
+    formatAndValidatePhone(billingPhone, billingPhoneError);
+  });
+  billingPhone.setAttribute("data-bound", "true");
+}
 
   // Attach validation after billing email is injected
   const billingEmail = document.getElementById("billingEmail");
