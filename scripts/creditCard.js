@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     ccNumberInput?.addEventListener("input", function () {
-        let value = this.value.replace(/\D/g, "");
+        let value = this.value.replace(/\D/g, "").slice(0, 16);
         let formatted = value;
         let cardType = "";
 
