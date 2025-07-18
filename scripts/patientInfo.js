@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!input) return;
 
     const email = input.value.trim();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
       errorSpan.textContent = "Please enter a valid email address.";
       input.classList.add("input-error");
