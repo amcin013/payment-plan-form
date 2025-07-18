@@ -143,4 +143,22 @@ select {
     width: 200px;
     display: inline-block;
   }
+  @media print {
+  body.cardholder-compact .form-section {
+    font-size: 9pt;
+    padding: 5px;
+  }
+
+  body.cardholder-compact .form-row,
+  body.cardholder-compact .form-row-inline {
+    margin-bottom: 4px;
+  }
+
+  body.cardholder-compact input,
+  body.cardholder-compact select {
+    font-size: 9pt;
+    padding: 2px 4px;
+  }
+}
+
 }
