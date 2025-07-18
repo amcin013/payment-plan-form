@@ -193,8 +193,8 @@ buttonContainer.innerHTML = `
     <p class="note">Please upload a scan or photo of the signed paper form. Accepted formats: JPG, PNG, PDF.</p>
   </div>
   <button id="clearButton">Clear</button>
-  <button id="printButton">Print</button>
-  <button id="submitPdfButton">Submit Signed PDF</button>
+  <button id="printButton">Print For Signature</button>
+  <button id="submitPdfButton">Print For Billing</button>
 
 `;
 
