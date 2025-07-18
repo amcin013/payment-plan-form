@@ -403,6 +403,17 @@ function updatePatientSection() {
     </div>
   </div>
 `;
+
+  // Attach validation after billing email is injected
+  const billingEmail = document.getElementById("billingEmail");
+  const billingEmailError = document.getElementById("billingEmailError");
+
+  if (billingEmail && !billingEmail.hasAttribute("data-bound")) {
+    billingEmail.addEventListener("blur", () => {
+      validateEmailField(billingEmail, billingEmailError);
+    });
+    billingEmail.setAttribute("data-bound", "true");
+  }
   } else {
     patientSignatureSection.innerHTML = `
       <h3>Patient Acknowledgement:</h3>
