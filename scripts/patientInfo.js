@@ -285,40 +285,53 @@ document.getElementById("submitPdfButton").addEventListener("click", async funct
 
   // Capture form content
   const formElement = document.getElementById("form-wrapper");
-  await html2canvas(formElement, { scale: 2 }).then((canvas) => {
-    const imgData = canvas.toDataURL("image/png");
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const pageHeight = doc.internal.pageSize.getHeight();
-    console.log("Adding form image");
-const imgProps = doc.getImageProperties(imgData);
-const pdfWidth = doc.internal.pageSize.getWidth();
-const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+await html2canvas(formElement, { scale: 2 }).then((canvas) => {
+  const imgData = canvas.toDataURL("image/png");
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
 
-// If image is taller than page, scale it down
-const finalHeight = pdfHeight > pageHeight ? pageHeight : pdfHeight;
+  const imgProps = doc.getImageProperties(imgData);
+  let imgWidth = imgProps.width;
+  let imgHeight = imgProps.height;
 
-doc.addImage(imgData, "PNG", 0, 0, pdfWidth, finalHeight);
+  // Calculate scaling factor to fit image within page
+  const scale = Math.min(pageWidth / imgWidth, pageHeight / imgHeight);
+  imgWidth *= scale;
+  imgHeight *= scale;
 
-  });
+  console.log("Adding form image");
+  doc.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+});
+
 
   // Add uploaded image (if available)
   const fileInput = document.getElementById("signedFormUpload");
   const file = fileInput?.files?.[0];
-  if (file && file.type.startsWith("image/")) {
-    const img = new Image();
-    img.src = URL.createObjectURL(file);
-    await new Promise((resolve) => {
-      img.onload = () => {
-        console.log("Adding scanned image");
-        doc.addPage();
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const imgHeight = (img.height * pageWidth) / img.width;
-        console.log("Adding form image");
-        doc.addImage(img, "PNG", 0, 0, pageWidth, imgHeight);
-        resolve();
-      };
-    });
-  }
+if (file && file.type.startsWith("image/")) {
+  const img = new Image();
+  img.src = URL.createObjectURL(file);
+  await new Promise((resolve) => {
+    img.onload = () => {
+      console.log("Adding scanned image");
+      doc.addPage();
+
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+
+      let imgWidth = img.width;
+      let imgHeight = img.height;
+
+      // Scale proportionally to fit within page
+      const scale = Math.min(pageWidth / imgWidth, pageHeight / imgHeight);
+      imgWidth *= scale;
+      imgHeight *= scale;
+
+      doc.addImage(img, "PNG", 0, 0, imgWidth, imgHeight);
+      resolve();
+    };
+  });
+}
+
 
   doc.save(`${filename}.pdf`);
   alert(`Encrypted PDF saved.\\n\\nPassword: ${password}`);
