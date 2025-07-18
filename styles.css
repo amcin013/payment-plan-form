@@ -54,15 +54,23 @@ select {
   font-size: 1em;
 }
 
-/* Card logos (if used) */
-/* .card-logo {
-  display: inline-block !important;
-  height: 25px;
-  vertical-align: middle;
-  margin-left: 100px;
-  margin-right: 100px;
+/* Style for invalid input field */
+.input-error {
+  border: 2px solid #e74c3c;
+  background-color: #ffecec;
+  color: #c0392b;
+  outline: none;
 }
-*/
+
+/* Style for the error message below the input */
+.error-message {
+  color: #e74c3c;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-top: 2px;
+  display: block;
+}
+
 
 #card-logo {
   display: inline-block;
