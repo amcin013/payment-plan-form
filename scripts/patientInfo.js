@@ -23,6 +23,15 @@ document.addEventListener("DOMContentLoaded", function () {
       input.classList.remove("input-error");
       return true;
     }
+  }
+
+  patientEmail?.addEventListener("blur", () => {
+    validateEmailField(patientEmail, patientEmailError);
+  });
+
+  billingEmail?.addEventListener("blur", () => {
+    validateEmailField(billingEmail, billingEmailError);
+  });
   
   // Create Patient and Payment Information section
   const patientInfoSection = document.createElement("section");
