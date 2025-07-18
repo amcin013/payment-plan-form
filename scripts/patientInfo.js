@@ -3,10 +3,10 @@
 document.addEventListener("DOMContentLoaded", function () {
   const formWrapper = document.getElementById("form-wrapper");
   // Email address validation
- const patientEmail = document.getElementById("patientEmail");
-  const patientEmailError = document.getElementById("patientEmailError");
-  const billingEmail = document.getElementById("billingEmail");
-  const billingEmailError = document.getElementById("billingEmailError");
+// const patientEmail = document.getElementById("patientEmail");
+//  const patientEmailError = document.getElementById("patientEmailError");
+//  const billingEmail = document.getElementById("billingEmail");
+//  const billingEmailError = document.getElementById("billingEmailError");
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
