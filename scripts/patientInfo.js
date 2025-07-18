@@ -2,7 +2,28 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   const formWrapper = document.getElementById("form-wrapper");
+  // Email address validation
+ const patientEmail = document.getElementById("patientEmail");
+  const patientEmailError = document.getElementById("patientEmailError");
+  const billingEmail = document.getElementById("billingEmail");
+  const billingEmailError = document.getElementById("billingEmailError");
 
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function validateEmailField(input, errorSpan) {
+    if (!input) return;
+
+    const email = input.value.trim();
+    if (!emailPattern.test(email)) {
+      errorSpan.textContent = "Please enter a valid email address.";
+      input.classList.add("input-error");
+      return false;
+    } else {
+      errorSpan.textContent = "";
+      input.classList.remove("input-error");
+      return true;
+    }
+  
   // Create Patient and Payment Information section
   const patientInfoSection = document.createElement("section");
   patientInfoSection.className = "form-section";
@@ -368,7 +389,8 @@ function updatePatientSection() {
     </div>
     <div class="form-row">
       <label for="billingEmail">Email:</label>
-      <input type="email" id="billingEmail" />
+      <input type="email" id="billingEmail" name="billingEmail" required/>
+      <span id="billingEmailError" class="error-message"></span>
     </div>
   </div>
 `;
