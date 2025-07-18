@@ -18,22 +18,22 @@ document.addEventListener("DOMContentLoaded", function () {
             // Visa
             formatted = value.replace(/(\d{4})(?=\d)/g, "$1 ");
             cardType = "Visa";
-            ccLogo.src = "/payment-plan-form/assets/Icon_Visa.png";
+            ccLogo.src = "/payment-plan-form/assets/visa.png";
         } else if (/^5[1-5]/.test(value)) {
             // MasterCard
             formatted = value.replace(/(\d{4})(?=\d)/g, "$1 ");
             cardType = "MasterCard";
-            ccLogo.src = "/payment-plan-form/assets/Icon_MC.png";
+            ccLogo.src = "/payment-plan-form/assets/mastercard.png";
         } else if (/^3[47]/.test(value)) {
             // American Express
             formatted = value.replace(/(\d{4})(\d{6})(\d{5})/, "$1 $2 $3");
             cardType = "American Express";
-            ccLogo.src = "/payment-plan-form/assets/Icon_Amex.png";
+            ccLogo.src = "/payment-plan-form/assets/amex.png";
         } else if (/^6(?:011|5)/.test(value)) {
             // Discover
             formatted = value.replace(/(\d{4})(?=\d)/g, "$1 ");
             cardType = "Discover";
-            ccLogo.src = "/payment-plan-form/assets/Icon_Discover.png";
+            ccLogo.src = "/payment-plan-form/assets/discover.png";
         } else {
             ccLogo.style.display = "none";
         }
