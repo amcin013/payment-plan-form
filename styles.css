@@ -98,6 +98,13 @@ select {
   white-space: nowrap;
 }
 
+.form-row-inline input,
+.form-row-inline select {
+  flex: 1 1 auto;
+  min-width: 120px;
+}
+
+
 /* Notes and disclaimers */
 .note {
   font-size: 0.8em;
@@ -109,10 +116,13 @@ select {
     font-family: Arial, sans-serif;
     background: white;
     color: black;
-    font-size: 11pt;
-    margin: 20px;
+    font-size: 10pt;
+    margin: 0.25in;
   }
-
+.form-section {
+  page-break-inside: avoid;
+  break-inside: avoid; /* for cross-browser compatibility */
+}
   #form-buttons {
     display: none;
   }
