@@ -46,30 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
 
   formWrapper.appendChild(patientInfoSection);
-  /* Inject patient address using createElement to support Google PlaceAutocompleteElement
-const patientAddressRow = document.createElement("div");
-patientAddressRow.className = "form-row-inline";
-
-const patientLabel = document.createElement("label");
-patientLabel.setAttribute("for", "patientAddress");
-patientLabel.textContent = "Patient Address:";
-
-const patientAuto = document.createElement("gmpx-place-autocomplete");
-patientAuto.id = "patientAddress";
-patientAuto.style.width = "40em";
-
-const patientInput = document.createElement("input");
-patientInput.type = "text";
-patientInput.placeholder = "Start typing address...";
-patientInput.style.width = "100%";
-
-// Build and append
-patientAuto.appendChild(patientInput);
-patientAddressRow.appendChild(patientLabel);
-patientAddressRow.appendChild(patientAuto);
-patientInfoSection.appendChild(patientAddressRow);
-*/
-  // Attach credit card formatting listener after element is injected
 const ccNumberInput = document.getElementById("ccNumber");
 
 if (ccNumberInput) {
@@ -290,15 +266,6 @@ doc.addImage(imgData, "PNG", 0, 0, pdfWidth, finalHeight);
     });
   }
 
-  // Encrypt + Save
-//  if (doc.encrypt) {
-//    doc.encrypt({
-//      userPassword: password,
-//      ownerPassword: password,
-//      userPermissions: ["print"]
- //   });
-//  }
-
   doc.save(`${filename}.pdf`);
   alert(`Encrypted PDF saved.\\n\\nPassword: ${password}`);
 
@@ -428,10 +395,6 @@ billingPicker?.addEventListener("gmpx-placechange", (event) => {
 });
 
 }
-
-
-
-
   // Update cardholder authorization section
   function updateCardholderAuthorizationSection() {
     const patientName = patientNameInput.value.trim().toLowerCase();
