@@ -18,7 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     <div class="form-row">
       <label for="patientEmail">Patient Email:</label>
-      <input type="email" id="patientEmail" />
+      <input type="email" id="patientEmail" name="patientEmail" required />
+      <span id="patientEmailError" class="error-message"></span>
     </div>
 
     <div class="form-row-inline">
