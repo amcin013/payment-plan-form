@@ -478,6 +478,11 @@ billingPicker?.addEventListener("gmpx-placechange", (event) => {
 
   // Optional: use place.formattedAddress or place.addressComponents
 });
+if (cardholderName && !isMatch && !isCheckboxChecked) {
+  document.body.classList.add("cardholder-compact");
+} else {
+  document.body.classList.remove("cardholder-compact");
+}
 
 }
   // Update cardholder authorization section
