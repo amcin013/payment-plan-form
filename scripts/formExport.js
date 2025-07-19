@@ -7,6 +7,7 @@ function gatherFormDataAsJSON() {
     "accountNumber",
     "patientEmail",
     "ccNumber",
+    "cardType",
     "expDate",
     "nameOnCard",
     "nameMatchCheckbox",
