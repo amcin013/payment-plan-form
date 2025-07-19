@@ -4,7 +4,7 @@
    <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Payment Plan Form</title>
-  <link rel="stylesheet" href="/payment-plan-form/styles.css" />
+  <link rel="stylesheet" href="./styles.css" />
 
   <script type="module" src="https://unpkg.com/@googlemaps/extended-component-library@latest"></script>
   <gmpx-api-loader 
@@ -13,20 +13,23 @@
   </gmpx-api-loader>
 </head>
 <body>
-  <div id="logo-container" style="text-align: center; margin-bottom: 20px;">
+  <div id="logo-container" style="text-align: center; margin-bottom: 2px;">
     <img src="assets/logo.png" alt="Company Logo" style="max-width: 400px; height: auto;" />
   </div>
+	<div id="contact-info" style="text-align: center; margin-bottom: 2px">
+		(512)444-8900     (512)444-7244
+	</div>
 
   <div id="form-wrapper">
     <!-- Main content dynamically injected by JS -->
   </div>
 
-  <script src="/payment-plan-form/scripts/creditCard.js"></script>
-  <script src="/payment-plan-form/scripts/installmentPlan.js"></script>
-  <script src="/payment-plan-form/scripts/patientInfo.js"></script>
-  <script src="/payment-plan-form/scripts/signatureblock.js"></script>
-  <script src="/payment-plan-form/scripts/jspdf.umd.min.js"></script>
-  <script src="/payment-plan-form/scripts/html2canvas.min.js"></script>
+  <script src="./scripts/creditCard.js"></script>
+  <script src="./scripts/installmentPlan.js"></script>
+  <script src="./scripts/patientInfo.js"></script>
+  <script src="./scripts/signatureblock.js"></script>
+  <script src="./scripts/jspdf.umd.min.js"></script>
+  <script src="./scripts/html2canvas.min.js"></script>
 
 </body>
 </html>
