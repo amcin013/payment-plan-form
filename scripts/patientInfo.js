@@ -392,11 +392,16 @@ if (billingPhone && !billingPhone.hasAttribute("data-bound")) {
       <h3>Patient Acknowledgement:</h3>
       <p class="fine-print">
         I understand that by signing this payment plan, I am allowing Longhorn Imaging to run my card every month that my plan designates for the above amount until the balance is paid in full. I further acknowledge that once my payment plan is entered, I am not able to make any adjustments and the above agreement is final. Should my card decline more than two times, I understand I will be billed for my remaining balance.
-      </p>
       <div class="form-row-inline">
-        <label>Patient Name (Printed):</label><input type="text" />
-        <label>Patient Signature:</label><input type="text" class="signature-field" /><br>
-        <label>Date:</label><input type="date" />
+        <label>Patient Name (Printed):</label>
+        <input type="text" />
+
+        <label>Patient Signature:</label>
+        <input type="text" class="signature-field" />
+      </div>
+      <div class="form-row-inline">
+        <label>Date:</label>
+        <input type="date" class="date-field" />
       </div>
     `;
   }
