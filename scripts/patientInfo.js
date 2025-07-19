@@ -230,16 +230,14 @@ if (printButton) {
   });
 }
 
-document.getElementById("submitBillingButton")?.addEventListener("click", () => {
-  if (typeof downloadFormDataJSON === "function") {
-    downloadFormDataJSON();
-  } else {
-    console.error("downloadFormDataJSON not defined");
-  }
-});
-
-
-  
+//document.getElementById("submitBillingButton")?.addEventListener("click", () => {
+//  if (typeof downloadFormDataJSON === "function") {
+//    downloadFormDataJSON();
+//  } else {
+//    console.error("downloadFormDataJSON not defined");
+//  }
+//});
+ 
   // Element references
   const patientNameInput = document.getElementById("patientName");
   const nameOnCardInput = document.getElementById("nameOnCard");
