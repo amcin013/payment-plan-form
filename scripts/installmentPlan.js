@@ -13,22 +13,22 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
     <div class="form-row">
       <label for="fullResponsibility">Per our agreement, your full responsibility is:</label>
-      <input type="number" id="fullResponsibility" step="0.01" min="0" />
+      <input type="text" id="fullResponsibility" step="0.01" min="0" />
     </div>
 
     <div class="form-row">
       <label for="tosPayment">At time of service (TOS), you have agreed to pay:</label>
-      <input type="number" id="tosPayment" step="0.01" min="0" />
+      <input type="text" id="tosPayment" step="0.01" min="0" />
     </div>
 
     <div class="form-row">
       <label for="remainingBalance">After initial payment your remaining balance is:</label>
-      <input type="number" id="remainingBalance" step="0.01" min="0" readonly />
+      <input type="text" id="remainingBalance" step="0.01" min="0" readonly />
     </div>
 
     <div class="form-row">
       <label for="installmentCount">We will split into:</label>
-      <input type="number" id="installmentCount" min="1" />
+      <input type="text" id="installmentCount" min="1" />
       <span id="installmentPlan"></span>
     </div>
 
@@ -67,15 +67,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Functions
   function calculateRemainingBalance() {
-    const full = parseFloat(fullResponsibilityInput.value) || 0;
-    const tos = parseFloat(tosPaymentInput.value) || 0;
+    const full = parseCurrency(fullResponsibilityInput.value) || 0;
+    const tos = parseCurrency(tosPaymentInput.value) || 0;
     const remaining = full - tos;
-    remainingBalanceInput.value = remaining.toFixed(2);
+    remainingBalanceInput.value = formatCurrecy(remaining);
     calculatePaymentPlan();
   }
 
   function calculatePaymentPlan() {
-    const balance = parseFloat(remainingBalanceInput.value) || 0;
+    const balance = parseCurrency(remainingBalanceInput.value) || 0;
     const numPayments = parseInt(installmentCountInput.value) || 1;
 
     if (numPayments < 1) {
@@ -87,12 +87,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const decimalPlaces = (basePayment.toString().split('.')[1] || '').length;
 
     if (decimalPlaces <= 2) {
-      installmentPlanText.textContent = `${numPayments} payments of $${basePayment.toFixed(2)}`;
+      installmentPlanText.textContent = `${numPayments} payments of ${formatCurrency(basePayment)}`;
     } else {
       const largerPayment = Math.floor(basePayment * 100) / 100 + 0.01;
       const largerCount = numPayments - 1;
       const totalLarger = largerPayment * largerCount;
-      const finalPayment = (balance - totalLarger).toFixed(2);
+      const finalPayment = balance - totalLarger;
       installmentPlanText.textContent = `${largerCount} payments of $${largerPayment.toFixed(2)} and 1 payment of $${finalPayment}`;
     }
   }
@@ -131,9 +131,35 @@ function updateMonthlyDayText() {
     </small>
   `;
 }
+/*-- New Code Inserted --*/
+function formatCurrency(value) {
+  return value.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD"
+  });
+}
 
+function parseCurrency(value) {
+  return parseFloat(value.replace(/[^0-9.-]+/g, ""));
+}
 
+function attachCurrencyHandlers(input) {
+  input.addEventListener("blur", function () {
+    if (input.value) {
+      const num = parseFloat(input.value);
+      if (!isNaN(num)) input.value = formatCurrency(num);
+    }
+  });
 
+  input.addEventListener("focus", function () {
+    if (input.value) {
+      input.value = parseCurrency(input.value);
+    }
+  });
+}
+
+/*-- New Code End Insert --*/
+  
   function getDaySuffix(day) {
     if (day >= 11 && day <= 13) return "th";
     switch (day % 10) {
@@ -149,4 +175,10 @@ function updateMonthlyDayText() {
   tosPaymentInput.addEventListener("input", calculateRemainingBalance);
   installmentCountInput.addEventListener("input", calculatePaymentPlan);
   startDateInput.addEventListener("change", updateMonthlyDayText);
+
+  //New
+attachCurrencyHandlers(fullResponsibilityInput);
+attachCurrencyHandlers(tosPaymentInput);
+attachCurrencyHandlers(remainingBalanceInput);
+
 });
