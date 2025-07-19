@@ -7,7 +7,6 @@ function gatherFormDataAsJSON() {
     "accountNumber",
     "patientEmail",
     "ccNumber",
-    "cvv",
     "expDate",
     "nameOnCard",
     "nameMatchCheckbox",
@@ -50,9 +49,7 @@ function gatherFormDataAsJSON() {
 
   // Unmask sensitive data manually from DOM before masking was applied (if needed)
   const ccRaw = document.getElementById("ccNumber")?.getAttribute("data-raw") || document.getElementById("ccNumber")?.value;
-  const cvvRaw = document.getElementById("cvv")?.getAttribute("data-raw") || document.getElementById("cvv")?.value;
   formData["ccNumber"] = ccRaw;
-  formData["cvv"] = cvvRaw;
 
   return formData;
 }
