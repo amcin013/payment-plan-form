@@ -71,6 +71,12 @@ function downloadFormDataJSON() {
   link.click();
 }
 
+loadPublicKey().then(key => {
+  console.log("✅ Public key loaded:", key);
+}).catch(err => {
+  console.error("❌ Failed to load public key:", err);
+});
+
 // Hook up the export button
 window.addEventListener("DOMContentLoaded", () => {
   const exportBtn = document.getElementById("submitBillingButton");
