@@ -93,6 +93,20 @@ async function encryptWithAESKey(key, iv, jsonData) {
 
   return ciphertext;
 }
+// Encrypt AES key with RSA public key
+// This function takes the RSA public key and the AES key, and returns the encrypted AES key
+async function encryptAESKeyWithRSA(publicKey, aesKey) {
+  const rawKey = await crypto.subtle.exportKey("raw", aesKey);
+
+  const encryptedKey = await crypto.subtle.encrypt(
+    { name: "RSA-OAEP" },
+    publicKey,
+    rawKey
+  );
+
+  return encryptedKey; // returns ArrayBuffer
+}
+
 
 loadPublicKey().then(key => {
   console.log("✅ Public key loaded:", key);
