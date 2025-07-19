@@ -65,7 +65,8 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-
+// Generate AES key and IV for encryption
+// This is used to encrypt the JSON data before sending it to the server
 async function generateAESKeyAndIV() {
   const key = await crypto.subtle.generateKey(
     { name: "AES-GCM", length: 256 },
@@ -75,7 +76,23 @@ async function generateAESKeyAndIV() {
   const iv = crypto.getRandomValues(new Uint8Array(12)); // 96-bit IV recommended for AES-GCM
   return { key, iv };
 }
+// Encrypt JSON data using AES-GCM
+// This function takes the AES key, IV, and JSON data, and returns the encrypted ciphertext
+async function encryptWithAESKey(key, iv, jsonData) {
+  const encoder = new TextEncoder();
+  const encodedData = encoder.encode(jsonData);
 
+  const ciphertext = await crypto.subtle.encrypt(
+    {
+      name: "AES-GCM",
+      iv: iv
+    },
+    key,
+    encodedData
+  );
+
+  return ciphertext;
+}
 
 loadPublicKey().then(key => {
   console.log("✅ Public key loaded:", key);

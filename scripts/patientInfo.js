@@ -429,9 +429,15 @@ if (cardholderName && !isMatch && !isCheckboxChecked) {
           I understand that this authorization will remain in effect until I cancel it in person or over the phone, and I agree to notify Longhorn Imaging Centers in person or over the phone of any changes in my account information or termination of this authorization at least 15 days prior to the next billing date. If the above noted payment dates fall on a weekend or holiday, I understand that the payments may be executed on the next business day. I acknowledge that the origination of Credit Card transactions to my account must comply with the provisions of U.S. law. I certify that I am an authorized user of this Credit Card and will not dispute these scheduled transactions; so long as the transactions correspond to the terms indicated in this authorization form.
         </p>
         <div class="form-row-inline">
-          <label>Cardholder Name (Printed):</label><input type="text" />
-          <label>Cardholder Signature:</label><input type="text" class="signature-field" />
-          <label>Date:</label><input type="date" />
+         <label>Cardholder Name (Printed):</label>
+         <input type="text" />
+
+         <label>Cardholder Signature:</label>
+         <input type="text" class="signature-field" />
+        </div>
+        <div class="form-row-inline">
+          <label>Date:</label>
+          <input type="date" class="date-field" />
         </div>
       `;
     } else {

@@ -91,7 +91,8 @@ select {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 1em;
+  gap: 10px; /* Space between items */
 }
 
 .form-row-inline label {
