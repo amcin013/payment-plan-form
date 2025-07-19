@@ -79,7 +79,7 @@ loadPublicKey().then(key => {
 
 // Test data filling functionality
 // This is for development purposes to quickly fill the form with test data
-document.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", () => {
   const fillButton = document.getElementById("fillTestDataButton");
 
   if (fillButton) {
