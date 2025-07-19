@@ -484,9 +484,9 @@ patientAddressRow.appendChild(patientLabel);
 patientAddressRow.appendChild(patientPicker);
 
 
-  const section = document.querySelector(".form-section");
-  if (section) {
-    section.appendChild(patientAddressRow);
+  const cvvInput = document.getElementById("cvv");
+  if (cvvInput && cvvInput.parentNode) {
+    cvvInput.parentNode.insertAdjacentElement("afterend", patientAddressRow);
     // Patient address listener
 patientPicker.addEventListener("gmpx-placechange", (event) => {
   const place = event.target.value;
