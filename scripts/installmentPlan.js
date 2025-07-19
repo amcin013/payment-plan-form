@@ -66,6 +66,34 @@ document.addEventListener("DOMContentLoaded", function () {
   const dateErrorRow = document.getElementById("dateErrorRow");
 
   // Functions
+
+  /*-- New Code Inserted --*/
+function formatCurrency(value) {
+  return value.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD"
+  });
+}
+
+function parseCurrency(value) {
+  return parseFloat(value.replace(/[^0-9.-]+/g, ""));
+}
+function attachCurrencyHandlers(input) {
+  input.addEventListener("blur", function () {
+    if (input.value) {
+      const num = parseFloat(input.value);
+      if (!isNaN(num)) input.value = formatCurrency(num);
+    }
+  });
+
+  input.addEventListener("focus", function () {
+    if (input.value) {
+      input.value = parseCurrency(input.value);
+    }
+  });
+}
+  
+/*-- New Code End Insert --*/
   function calculateRemainingBalance() {
     const full = parseCurrency(fullResponsibilityInput.value) || 0;
     const tos = parseCurrency(tosPaymentInput.value) || 0;
@@ -131,34 +159,6 @@ function updateMonthlyDayText() {
     </small>
   `;
 }
-/*-- New Code Inserted --*/
-function formatCurrency(value) {
-  return value.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD"
-  });
-}
-
-function parseCurrency(value) {
-  return parseFloat(value.replace(/[^0-9.-]+/g, ""));
-}
-
-function attachCurrencyHandlers(input) {
-  input.addEventListener("blur", function () {
-    if (input.value) {
-      const num = parseFloat(input.value);
-      if (!isNaN(num)) input.value = formatCurrency(num);
-    }
-  });
-
-  input.addEventListener("focus", function () {
-    if (input.value) {
-      input.value = parseCurrency(input.value);
-    }
-  });
-}
-
-/*-- New Code End Insert --*/
   
   function getDaySuffix(day) {
     if (day >= 11 && day <= 13) return "th";
