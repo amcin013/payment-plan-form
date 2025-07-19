@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
   patientInfoSection.innerHTML = `
     <input type="hidden" id="patientAddressHidden" />
     <input type="hidden" id="billingAddressHidden" />
+    <input type="hidden" id="cardType" />
     <h2>Patient and Payment Information</h2>
 
     <div class="form-row-inline">
@@ -133,6 +134,8 @@ if (ccNumberInput) {
     }
 
     this.value = formatted.trim();
+   // 🔑 Save card type in hidden input
+     document.getElementById("cardType").value = cardType;
     if (cardType) {
       ccLogo.alt = cardType;
       ccLogo.style.display = "inline-block";
