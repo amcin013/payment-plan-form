@@ -2,11 +2,6 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   const formWrapper = document.getElementById("form-wrapper");
-  // Email address validation
-// const patientEmail = document.getElementById("patientEmail");
-//  const patientEmailError = document.getElementById("patientEmailError");
-//  const billingEmail = document.getElementById("billingEmail");
-//  const billingEmailError = document.getElementById("billingEmailError");
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -51,6 +46,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const patientInfoSection = document.createElement("section");
   patientInfoSection.className = "form-section";
   patientInfoSection.innerHTML = `
+    <input type="hidden" id="patientAddressHidden" />
+    <input type="hidden" id="billingAddressHidden" />
     <h2>Patient and Payment Information</h2>
 
     <div class="form-row-inline">
@@ -494,7 +491,8 @@ patientAddressRow.appendChild(patientPicker);
 patientPicker.addEventListener("gmpx-placechange", (event) => {
   const place = event.target.value;
   console.log("🏥 Patient address selected:", place);
-
+  const formatted = place?.formattedAddress || "";
+      document.getElementById("patientAddressHidden").value = formatted;
   // Optional: Do something with it
   // e.g., document.getElementById("someHiddenField").value = place.formattedAddress;
 });
