@@ -57,25 +57,55 @@ function gatherFormDataAsJSON() {
   return formData;
 }
 
-// Trigger download of JSON file
-function downloadFormDataJSON() {
-  const data = gatherFormDataAsJSON();
-  const rawAccount = data.accountNumber || "unknown";
-  const rawFormDate = data.formDate || "no-date";
-  const safeAccount = rawAccount.replace(/[^a-zA-Z0-9-_]/g, "_");
-  const safeDate = rawFormDate.replace(/[^a-zA-Z0-9-_]/g, "_");
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = `payment_plan_${safeAccount}_${safeDate}.json`;
-  link.click();
-}
+// Hook up the export button
+window.addEventListener("DOMContentLoaded", () => {
+  const exportBtn = document.getElementById("submitBillingButton");
+  if (exportBtn) {
+    exportBtn.addEventListener("click", downloadFormDataJSON);
+  }
+});
 
 loadPublicKey().then(key => {
   console.log("✅ Public key loaded:", key);
 }).catch(err => {
   console.error("❌ Failed to load public key:", err);
 });
+
+// Trigger download of JSON file
+async function downloadFormDataJSON() {
+  const data = gatherFormDataAsJSON();
+  const rawAccount = data.accountNumber || "unknown";
+  const rawFormDate = data.formDate || "no-date";
+  const safeAccount = rawAccount.replace(/[^a-zA-Z0-9-_]/g, "_");
+  const safeDate = rawFormDate.replace(/[^a-zA-Z0-9-_]/g, "_");
+
+  const jsonString = JSON.stringify(data, null, 2);
+
+  try {
+    const publicKey = await loadPublicKey(); // your existing working function
+    const encoded = new TextEncoder().encode(jsonString);
+    const encryptedBuffer = await crypto.subtle.encrypt(
+      { name: "RSA-OAEP" },
+      publicKey,
+      encoded
+    );
+
+    const base64Encrypted = btoa(
+      String.fromCharCode(...new Uint8Array(encryptedBuffer))
+    );
+
+    const blob = new Blob([base64Encrypted], { type: "application/json" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `payment_plan_${safeAccount}_${safeDate}.json`;
+    link.click();
+
+    console.log("✅ Encrypted JSON downloaded");
+  } catch (err) {
+    console.error("❌ Encryption failed:", err);
+    alert("Encryption failed. See console for details.");
+  }
+}
 
 // Test data filling functionality
 // This is for development purposes to quickly fill the form with test data
@@ -100,8 +130,8 @@ window.addEventListener("DOMContentLoaded", () => {
         remainingBalance: "450.00",
         installmentCount: "3",
         startDate: "2025-08-01",
-        fullResponsibility: true,
-        tosPayment: true
+        fullResponsibility: 550.00,
+        tosPayment: 150.00,
       };
 
       Object.entries(testData).forEach(([id, value]) => {
@@ -117,13 +147,5 @@ window.addEventListener("DOMContentLoaded", () => {
 
       console.log("🧪 Test data filled");
     });
-  }
-});
-
-// Hook up the export button
-window.addEventListener("DOMContentLoaded", () => {
-  const exportBtn = document.getElementById("submitBillingButton");
-  if (exportBtn) {
-    exportBtn.addEventListener("click", downloadFormDataJSON);
   }
 });
