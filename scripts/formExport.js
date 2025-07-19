@@ -20,6 +20,8 @@ function gatherFormDataAsJSON() {
     "installmentCount",
     "startDate",
     "patientAddress",
+    "patientAddressHidden",
+    "billingAddressHidden",
     "billingAddress",
     "formDate",
     "fullResponsibility",

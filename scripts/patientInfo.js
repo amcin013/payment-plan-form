@@ -339,8 +339,28 @@ function updatePatientSection() {
     </div>
   </div>
 `;
+// Attach billing address listener and hidden input
+const billingPicker = document.getElementById("billingAddress");
+if (billingPicker) {
+  const hiddenBilling = document.createElement("input");
+  hiddenBilling.type = "hidden";
+  hiddenBilling.id = "billingAddressHidden";
+  billingPicker.parentNode.appendChild(hiddenBilling);
+
+  billingPicker.addEventListener("gmpx-placechange", (event) => {
+    const place = event.target.value;
+    console.log("💳 Billing address selected:", place);
+
+    const formatted = place?.formattedAddress || "";
+    const hidden = document.getElementById("billingAddressHidden");
+    if (hidden) {
+      hidden.value = formatted;
+    }
+  });
+}
+
   const authNameInput = document.getElementById("authName");
-const nameOnCardValue = document.getElementById("nameOnCard")?.value?.trim();
+  const nameOnCardValue = document.getElementById("nameOnCard")?.value?.trim();
 
 if (authNameInput && nameOnCardValue) {
   authNameInput.value = nameOnCardValue;
