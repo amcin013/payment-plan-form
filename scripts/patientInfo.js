@@ -478,7 +478,7 @@ if (billingPhone && !billingPhone.hasAttribute("data-bound")) {
       </p>
       <div class="form-row-inline">
         <label>Patient Name (Printed):</label><input type="text" />
-        <label>Patient Signature:</label><input type="text" class="signature-field" />
+        <label>Patient Signature:</label><input type="text" class="signature-field" /><br>
         <label>Date:</label><input type="date" />
       </div>
     `;
