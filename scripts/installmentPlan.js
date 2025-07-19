@@ -98,7 +98,7 @@ function attachCurrencyHandlers(input) {
     const full = parseCurrency(fullResponsibilityInput.value) || 0;
     const tos = parseCurrency(tosPaymentInput.value) || 0;
     const remaining = full - tos;
-    remainingBalanceInput.value = formatCurrecy(remaining);
+    remainingBalanceInput.value = formatCurrency(remaining);
     calculatePaymentPlan();
   }
 
