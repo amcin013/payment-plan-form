@@ -484,19 +484,22 @@ patientAddressRow.appendChild(patientLabel);
 patientAddressRow.appendChild(patientPicker);
 
 
-  const cvvInput = document.getElementById("cvv");
-  if (cvvInput && cvvInput.parentNode) {
-    cvvInput.parentNode.insertAdjacentElement("afterend", patientAddressRow);
-    // Patient address listener
-patientPicker.addEventListener("gmpx-placechange", (event) => {
-  const place = event.target.value;
-  console.log("🏥 Patient address selected:", place);
-  const formatted = place?.formattedAddress || "";
-      document.getElementById("patientAddressHidden").value = formatted;
-  // Optional: Do something with it
-  // e.g., document.getElementById("someHiddenField").value = place.formattedAddress;
-});
+const cvvInput = document.getElementById("cvv");
+if (cvvInput && cvvInput.parentNode) {
+  // Insert patientAddressRow after the CVV row
+  cvvInput.parentNode.insertAdjacentElement("afterend", patientAddressRow);
 
-  //  console.log('autocomplete element upgrade check:', customElements.get('gmpx-place-autocomplete'));
-  }
+  // Add event listener to capture selected address
+  patientPicker.addEventListener("gmpx-placechange", (event) => {
+    const place = event.target.value;
+    console.log("🏥 Patient address selected:", place);
+
+    const formatted = place?.formattedAddress || "";
+    const hiddenInput = document.getElementById("patientAddressHidden");
+    if (hiddenInput) {
+      hiddenInput.value = formatted;
+    }
+  });
+}
+
 });
