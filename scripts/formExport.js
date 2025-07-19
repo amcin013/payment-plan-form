@@ -65,6 +65,18 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+
+async function generateAESKeyAndIV() {
+  const key = await crypto.subtle.generateKey(
+    { name: "AES-GCM", length: 256 },
+    true,
+    ["encrypt", "decrypt"]
+  );
+  const iv = crypto.getRandomValues(new Uint8Array(12)); // 96-bit IV recommended for AES-GCM
+  return { key, iv };
+}
+
+
 loadPublicKey().then(key => {
   console.log("✅ Public key loaded:", key);
 }).catch(err => {
@@ -127,11 +139,11 @@ window.addEventListener("DOMContentLoaded", () => {
         relationship: "Spouse",
         billingPhone: "512-555-1234",
         billingEmail: "billing@example.com",
-        remainingBalance: "450.00",
+        remainingBalance: "400.00",
         installmentCount: "3",
         startDate: "2025-08-01",
-        fullResponsibility: 550.00,
-        tosPayment: 150.00,
+        fullResponsibility: "550.00",
+        tosPayment: "150.00",
       };
 
       Object.entries(testData).forEach(([id, value]) => {
