@@ -56,7 +56,7 @@ select {
 }
 
 .date-field {
-  width: 200px;       /* 👈 Shrink to a reasonable width */
+  width: 200px;  !important     /* 👈 Shrink to a reasonable width */
   max-width: 100%;    /* 👈 Prevent overflow on small screens */
   box-sizing: border-box;
 }

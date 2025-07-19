@@ -115,6 +115,8 @@ loadPublicKey().then(key => {
 });
 
 // Trigger download of JSON file
+/*--- Old function, replaced with new downloadFormDataJSON() ---*/
+/*--- 
 async function downloadFormDataJSON() {
   const data = gatherFormDataAsJSON();
   const rawAccount = data.accountNumber || "unknown";
@@ -149,6 +151,49 @@ async function downloadFormDataJSON() {
     alert("Encryption failed. See console for details.");
   }
 }
+ ---*/
+
+ // New function to download form data as hybrid-encrypted JSON
+// This function gathers form data, encrypts it with AES, and then encrypts the AES key with RSA
+// Finally, it downloads the encrypted data as a JSON file  
+async function downloadFormDataJSON() {
+  const data = gatherFormDataAsJSON();
+  const rawAccount = data.accountNumber || "unknown";
+  const rawFormDate = data.formDate || "no-date";
+  const safeAccount = rawAccount.replace(/[^a-zA-Z0-9-_]/g, "_");
+  const safeDate = rawFormDate.replace(/[^a-zA-Z0-9-_]/g, "_");
+
+  const jsonString = JSON.stringify(data);
+
+  try {
+    const publicKey = await loadPublicKey();
+    const { key: aesKey, iv } = await generateAESKeyAndIV();
+    const encryptedData = await encryptWithAESKey(aesKey, iv, jsonString);
+    const encryptedAESKey = await encryptAESKeyWithRSA(publicKey, aesKey);
+
+    // Convert buffers to base64
+    const encryptedBundle = {
+      key: btoa(String.fromCharCode(...new Uint8Array(encryptedAESKey))),
+      iv: btoa(String.fromCharCode(...iv)),
+      data: btoa(String.fromCharCode(...new Uint8Array(encryptedData)))
+    };
+
+    const blob = new Blob([JSON.stringify(encryptedBundle, null, 2)], {
+      type: "application/json"
+    });
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `payment_plan_${safeAccount}_${safeDate}.json`;
+    link.click();
+
+    console.log("✅ Hybrid-encrypted JSON file downloaded");
+  } catch (err) {
+    console.error("❌ Hybrid encryption failed:", err);
+    alert("Encryption failed. Check console for details.");
+  }
+}
+
 
 // Test data filling functionality
 // This is for development purposes to quickly fill the form with test data
