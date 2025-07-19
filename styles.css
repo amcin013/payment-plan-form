@@ -55,11 +55,13 @@ select {
   font-size: 1em;
 }
 
-.date-field {
-  width: 200px;  !important     /* 👈 Shrink to a reasonable width */
-  max-width: 100%;    /* 👈 Prevent overflow on small screens */
+.form-row-inline .date-field {
+  flex: 0 0 auto;
+  width: 200px;
+  max-width: 100%;
   box-sizing: border-box;
 }
+
 
 
 /* Style for invalid input field */

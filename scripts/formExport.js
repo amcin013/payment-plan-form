@@ -165,17 +165,37 @@ async function downloadFormDataJSON() {
 
   const jsonString = JSON.stringify(data);
 
+function bufferToBase64(buffer) {
+  const bytes = new Uint8Array(buffer);
+  let binary = "";
+  for (let i = 0; i < bytes.byteLength; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
+}
+
   try {
     const publicKey = await loadPublicKey();
     const { key: aesKey, iv } = await generateAESKeyAndIV();
-    const encryptedData = await encryptWithAESKey(aesKey, iv, jsonString);
+    const encryptedBuffer = await encryptWithAESKey(aesKey, iv, jsonString);
+
+  // Split ciphertext and tag
+  const encryptedBytes = new Uint8Array(encryptedBuffer);
+  const tag = encryptedBytes.slice(-16);
+  const ciphertext = encryptedBytes.slice(0, -16);
+
+  // Combine ciphertext + tag
+  const encryptedData = new Uint8Array(ciphertext.length + tag.length);
+  encryptedData.set(ciphertext);
+  encryptedData.set(tag, ciphertext.length);
+
     const encryptedAESKey = await encryptAESKeyWithRSA(publicKey, aesKey);
 
     // Convert buffers to base64
     const encryptedBundle = {
-      key: btoa(String.fromCharCode(...new Uint8Array(encryptedAESKey))),
-      iv: btoa(String.fromCharCode(...iv)),
-      data: btoa(String.fromCharCode(...new Uint8Array(encryptedData)))
+      key: bufferToBase64(encryptedAESKey),
+      iv: bufferToBase64(iv),
+      data: bufferToBase64(encryptedData)
     };
 
     const blob = new Blob([JSON.stringify(encryptedBundle, null, 2)], {
