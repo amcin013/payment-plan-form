@@ -6,6 +6,8 @@ function gatherFormDataAsJSON() {
     "patientName",
     "accountNumber",
     "patientEmail",
+    "ccNumber",
+    "cvv",
     "expDate",
     "nameOnCard",
     "nameMatchCheckbox",
@@ -19,7 +21,12 @@ function gatherFormDataAsJSON() {
     "startDate",
     "patientAddress",
     "billingAddress",
-    "formDate"
+    "formDate",
+    "fullResponsibility",
+    "installmentCount",
+    "remainingBalance",
+    "startDate",
+    "tosPayment",
   ];
 
   const formData = {};
@@ -51,10 +58,14 @@ function gatherFormDataAsJSON() {
 // Trigger download of JSON file
 function downloadFormDataJSON() {
   const data = gatherFormDataAsJSON();
+  const rawAccount = data.accountNumber || "unknown";
+  const rawFormDate = data.formDate || "no-date";
+  const safeAccount = rawAccount.replace(/[^a-zA-Z0-9-_]/g, "_");
+  const safeDate = rawFormDate.replace(/[^a-zA-Z0-9-_]/g, "_");
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = `payment_plan_${Date.now()}.json`;
+  link.download = `payment_plan_${safeAccount}_${safeDate}.json`;
   link.click();
 }
 
