@@ -1,5 +1,5 @@
 async function loadPublicKey() {
-  const response = await fetch("/scripts/keys/public_key.pem");
+  const response = await fetch("scripts/keys/public_key.pem");
   const pemText = await response.text();
 
   // Extract Base64 from PEM
