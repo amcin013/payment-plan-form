@@ -206,8 +206,6 @@ function bufferToBase64(buffer) {
     link.href = URL.createObjectURL(blob);
     link.download = `payment_plan_${safeAccount}_${safeDate}.json`;
     link.click();
-    console.WriteLine($"EncryptedData length: {encryptedData.Length}");
-    console.WriteLine($"IV length: {iv.Length}");
     console.log("✅ Hybrid-encrypted JSON file downloaded");
   } catch (err) {
     console.error("❌ Hybrid encryption failed:", err);
