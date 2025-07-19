@@ -212,6 +212,10 @@ function bufferToBase64(buffer) {
     console.error("❌ Hybrid encryption failed:", err);
     alert("Encryption failed. Check console for details.");
   }
+Console.WriteLine($"EncryptedData length: {encryptedData.Length}");
+Console.WriteLine($"IV length: {iv.Length}");
+
+
 }
 
 
