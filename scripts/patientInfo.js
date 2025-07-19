@@ -186,8 +186,8 @@ buttonContainer.id = "form-buttons";
 buttonContainer.innerHTML = `
   <button id="clearButton">Clear</button>
   <button id="printButton">Print For Signature</button>
-  <button id="submitBillingButton">File Billing</button>
-
+  <button id="submitBillingButton">File Billing Docs</button>
+  <button type="button" id="fillTestDataButton">Fill Test Data</button>
 `;
 
 formWrapper.appendChild(buttonContainer);

@@ -56,6 +56,49 @@ function gatherFormDataAsJSON() {
 
   return formData;
 }
+// Test data filling functionality
+// This is for development purposes to quickly fill the form with test data
+document.addEventListener("DOMContentLoaded", () => {
+  const fillButton = document.getElementById("fillTestDataButton");
+
+  if (fillButton) {
+    fillButton.addEventListener("click", () => {
+      const testData = {
+        patientName: "John Doe",
+        accountNumber: "ALLMCT",
+        patientEmail: "johndoe@example.com",
+        ccNumber: "4111111111111111",
+        expDate: "12/26",
+        cvv: "123",
+        nameOnCard: "John Doe",
+        nameMatchCheckbox: true,
+        authName: "Jane Doe",
+        relationship: "Spouse",
+        billingPhone: "512-555-1234",
+        billingEmail: "billing@example.com",
+        remainingBalance: "450.00",
+        installmentCount: "3",
+        startDate: "2025-08-01",
+        fullResponsibility: true,
+        tosPayment: true
+      };
+
+      Object.entries(testData).forEach(([id, value]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        if (el.type === "checkbox") {
+          el.checked = value;
+        } else {
+          el.value = value;
+        }
+      });
+
+      console.log("🧪 Test data filled");
+    });
+  }
+});
+
 
 // Trigger download of JSON file
 function downloadFormDataJSON() {
