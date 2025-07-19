@@ -154,6 +154,12 @@ select {
     width: 200px;
     display: inline-block;
   }
+  /* Fix for stretched date picker */
+.form-row-inline input[type="date"] {
+  flex: 0 0 auto;
+  width: 140px; /* adjust as needed */
+}
+
   @media print {
   body.cardholder-compact .form-section {
     font-size: 9pt;
