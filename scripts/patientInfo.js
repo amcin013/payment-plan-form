@@ -187,34 +187,11 @@ if (expDateInput) {
   const buttonContainer = document.createElement("div");
 buttonContainer.id = "form-buttons";
 buttonContainer.innerHTML = `
-<div id="upload-section" class="form-section">
-    <h3>Upload Signed Form</h3>
-    <input type="file" id="signedFormUpload" accept="image/*,.pdf" />
-    <p class="note">Please upload a scan or photo of the signed paper form. Accepted formats: JPG, PNG, PDF.</p>
-  </div>
   <button id="clearButton">Clear</button>
   <button id="printButton">Print For Signature</button>
-  <button id="submitPdfButton">Print For Billing</button>
+  <button id="submitBillingButton">File Billing</button>
 
 `;
-
-let uploadedSignedFormFile = null;
-
-document.addEventListener("DOMContentLoaded", function () {
-  const signedFormInput = document.getElementById("signedFormUpload");
-  if (signedFormInput) {
-    signedFormInput.addEventListener("change", function () {
-      const file = this.files[0];
-      if (file) {
-        uploadedSignedFormFile = file;
-        console.log("Signed form uploaded:", file.name);
-      } else {
-        uploadedSignedFormFile = null;
-      }
-    });
-  }
-});
-
 
 formWrapper.appendChild(buttonContainer);
 const clearButton = document.getElementById("clearButton");
@@ -256,90 +233,15 @@ if (printButton) {
   });
 }
 
-document.getElementById("submitPdfButton").addEventListener("click", async function () {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  // Gather info for filename and password
-  const account = document.getElementById("accountNumber")?.value?.trim() || "UNKNOWN";
-  const dos = document.getElementById("dos")?.value || new Date().toISOString().slice(0, 10);
-  const patientName = document.getElementById("patientName")?.value?.trim() || "Unknown Name";
-
-  const dosFormatted = dos.replace(/-/g, "");
-  const filename = `PP-${account}-${dosFormatted}`;
-
-  const last4 = account.slice(-4).toUpperCase();
-  const first3 = patientName.replace(/[^a-zA-Z]/g, "").slice(0, 3).toUpperCase();
-  const password = `${last4}${dosFormatted}${first3}`;
-
-  // Temporarily mask CC/CVV
-  const cc = document.getElementById("ccNumber");
-  const cvv = document.getElementById("cvv");
-  const originalCC = cc?.value;
-  const originalCVV = cvv?.value;
-  if (cc) {
-    const digits = cc.value.replace(/\D/g, "");
-    if (digits.length > 4) cc.value = "XXXX XXXX XXXX " + digits.slice(-4);
-  }
-  if (cvv) cvv.value = "XXX";
-
-  // Capture form content
-  const formElement = document.getElementById("form-wrapper");
-await html2canvas(formElement, { scale: 2 }).then((canvas) => {
-  const imgData = canvas.toDataURL("image/png");
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const pageHeight = doc.internal.pageSize.getHeight();
-
-  const imgProps = doc.getImageProperties(imgData);
-  let imgWidth = imgProps.width;
-  let imgHeight = imgProps.height;
-
-  // Calculate scaling factor to fit image within page
-  const scale = Math.min(pageWidth / imgWidth, pageHeight / imgHeight);
-  imgWidth *= scale;
-  imgHeight *= scale;
-
-  console.log("Adding form image");
-  doc.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+document.getElementById("submitBillingButton").addEventListener("click", () => {
+  const data = gatherFormDataAsJSON();
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `payment_plan_${Date.now()}.json`;
+  link.click();
 });
 
-
-  // Add uploaded image (if available)
-  const fileInput = document.getElementById("signedFormUpload");
-  const file = fileInput?.files?.[0];
-if (file && file.type.startsWith("image/")) {
-  const img = new Image();
-  img.src = URL.createObjectURL(file);
-  await new Promise((resolve) => {
-    img.onload = () => {
-      console.log("Adding scanned image");
-      doc.addPage();
-
-      const pageWidth = doc.internal.pageSize.getWidth();
-      const pageHeight = doc.internal.pageSize.getHeight();
-
-      let imgWidth = img.width;
-      let imgHeight = img.height;
-
-      // Scale proportionally to fit within page
-      const scale = Math.min(pageWidth / imgWidth, pageHeight / imgHeight);
-      imgWidth *= scale;
-      imgHeight *= scale;
-
-      doc.addImage(img, "PNG", 0, 0, imgWidth, imgHeight);
-      resolve();
-    };
-  });
-}
-
-
-  doc.save(`${filename}.pdf`);
-  alert(`Encrypted PDF saved.\\n\\nPassword: ${password}`);
-
-  // Restore original CC/CVV
-  if (cc) cc.value = originalCC;
-  if (cvv) cvv.value = originalCVV;
-});
   
   // Element references
   const patientNameInput = document.getElementById("patientName");
